@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0f1e;
+  --card: #111827;
+  --card-border: #1f2937;
+}
+
+body {
+  background-color: var(--bg);
+  color: white;
+  font-family: Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Prevent overscroll on mobile */
+html,
+body {
+  overscroll-behavior: none;
+  height: 100%;
+}
+
+/* Card swipe overlays */
+.swipe-correct {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.15), rgba(22, 163, 74, 0.05));
+  border-color: rgba(22, 163, 74, 0.6) !important;
+}
+
+.swipe-incorrect {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(220, 38, 38, 0.05));
+  border-color: rgba(220, 38, 38, 0.6) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 2px;
+}
+
+/* No-select on swipe cards */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
