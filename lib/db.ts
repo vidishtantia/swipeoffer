@@ -3,7 +3,10 @@ import path from "path";
 import type { Card, Topic, Difficulty, CardSource } from "./types";
 import { seedData } from "./seed-data";
 
-const DB_PATH = path.join(process.cwd(), "flashcards.db");
+// Vercel's project root is read-only; use /tmp (writable) when deployed
+const DB_PATH = process.env.VERCEL
+  ? "/tmp/flashcards.db"
+  : path.join(process.cwd(), "flashcards.db");
 
 let _db: DatabaseSync | null = null;
 
