@@ -33,7 +33,7 @@ function initSchema(db: DatabaseSync) {
     CREATE INDEX IF NOT EXISTS idx_cards_difficulty ON cards(difficulty);
   `);
 
-  const row = db.prepare("SELECT COUNT(*) as n FROM cards").get() as { n: number };
+  const row = db.prepare("SELECT COUNT(*) as n FROM cards").get() as unknown as { n: number };
   if (row.n === 0) {
     seedDatabase(db);
   }
@@ -60,12 +60,12 @@ export function getCards(topics: Topic[], difficulty?: string): Card[] {
   }
 
   sql += " ORDER BY id";
-  return db.prepare(sql).all(...params) as Card[];
+  return db.prepare(sql).all(...params) as unknown as Card[];
 }
 
 export function getCardById(id: number): Card | null {
   const db = getDb();
-  return (db.prepare("SELECT * FROM cards WHERE id = ?").get(id) as Card) ?? null;
+  return (db.prepare("SELECT * FROM cards WHERE id = ?").get(id) as unknown as Card) ?? null;
 }
 
 export function insertCard(card: {
@@ -112,7 +112,7 @@ export function getCardCountByTopic(): Record<string, number> {
   const db = getDb();
   const rows = db
     .prepare("SELECT topic, COUNT(*) as count FROM cards GROUP BY topic")
-    .all() as Array<{ topic: string; count: number }>;
+    .all() as unknown as Array<{ topic: string; count: number }>;
   return Object.fromEntries(rows.map((r) => [r.topic, r.count]));
 }
 
@@ -122,5 +122,5 @@ export function getCardsByIds(ids: number[]): Card[] {
   const placeholders = ids.map(() => "?").join(", ");
   return db
     .prepare(`SELECT * FROM cards WHERE id IN (${placeholders})`)
-    .all(...ids) as Card[];
+    .all(...ids) as unknown as Card[];
 }
