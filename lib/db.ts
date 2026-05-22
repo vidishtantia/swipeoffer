@@ -1,4 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
+
+type SQLParam = null | number | bigint | string | NodeJS.ArrayBufferView;
 import path from "path";
 import type { Card, Topic, Difficulty, CardSource } from "./types";
 import { seedData } from "./seed-data";
@@ -52,7 +54,7 @@ export function getCards(topics: Topic[], difficulty?: string): Card[] {
   const db = getDb();
   const placeholders = topics.map(() => "?").join(", ");
   let sql = `SELECT * FROM cards WHERE topic IN (${placeholders})`;
-  const params: unknown[] = [...topics];
+  const params: SQLParam[] = [...topics];
 
   if (difficulty && difficulty !== "all") {
     sql += " AND difficulty = ?";
